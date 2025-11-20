@@ -13,16 +13,16 @@ function hh = dtmfdesign(fb, L, fs)
 % So to start, I'll define the filter 'h'
 n = 0:L-1; % Define inters for hte length of the FIR bandpass Filter
 
-hh = []; % Initialize
+hh = []; % Initialize vector
 for freq = fb
 
     h = cos(2*pi*freq/fs .*n); % Create unscaled BPF
 
-    [H, ~] = freqz(h, 1); % Take the frequency response of the BPF
+    [H, ~] = freqz(h,1); % Take the frequency response of the BPF (h is the coefficeints in numerator and 1 is the denominator coefficient).
 
     beta = 1/max(abs(H)); % Scale the magnitude by beta so that we get a maximum value of 1
 
-    h_scaled = beta*h; % Scale BPF by beta to get a maximum magnitude of 1.
+    h_scaled = beta*h; % Scale BPF by beta to get a maximum magnitude of 1. Using the Numerical Method
 
     hh = [hh, h_scaled(:)]; % Make sure each filter is added as a column
 end
