@@ -1,5 +1,8 @@
 %% 2.1 
 
+% Include DSP-First 'toolbox' to path
+addpath(genpath('filterdesign'));
+
 % ** The DSP System Toolbox was installed for the filterdesign GUI.
 
 M = 30;
@@ -7,7 +10,7 @@ wc = 0.4*pi; % 2 * pi * (2000 / 10000)
 
 % Part a
 
-filterDesigner %% not sure how we select the window type for this, looks a lot diff than the lab
+filterdesign 
 
 % Part b
 
