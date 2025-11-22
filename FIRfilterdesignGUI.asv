@@ -10,8 +10,8 @@ addpath(genpath('filterdesign'));
 % filterdesign % Used this command to open the GUI
 % M = 30;
 % wc = 0.4*pi; % 2 * pi * (2000 / 10000)
-F_samp
-samples = 1000; % Set the sample count for freqz
+F_samp = 10000;
+samples = 10000; % Set the sample count for freqz
 
 % Rectangular windowing:
 % In the GUI:
@@ -31,8 +31,21 @@ rect_num_coeffs = coeffs.a;
 rect_den_coeffs = coeffs.b;
 
 [h,w] = freqz(rect_den_coeffs,rect_num_coeffs,'whole',samples);
-f = w*F_samp/(2*pi); % Convert rad/s to Hz by multiplying by F_samp from GUI and dividing by 2pi
+f = w*F_samp/(2*pi); % Convert rad/s to Hz by multiplying by F_samp from GUI and dividing by 2π
+
+% Rotate h and shift f to show lowpass behavior.
+h = circshift(h,(samples/2));
+f = f-(F_samp/2);
+
+figure
+subplot(2,1,1)
 plot(f,abs(h))
+xlabel('Frequency (Hz)')
+ylabel('Magnitude')
+subplot(2,1,2)
+plot(f,angle(h))
+xlabel('Frequency (Hz)')
+ylabel('Phase')
 
 % Hamming windowing:
 % In the GUI:
@@ -55,23 +68,29 @@ hamm_den_coeffs = coeffs.b;
 
 % Part c
 
-%h_n_hamming = h .*(0.54 - 0.46 * (cos(2*pi.*(0:M-1)./(M-1)))); % From table 10.1
+% --------------------------------------------------------------------------------
+% This isn't needed, it's being calculated in the GUI
+% h_n_hamming = h .*(0.54 - 0.46 * (cos(2*pi.*(0:M-1)./(M-1)))); % From table 10.1
+% --------------------------------------------------------------------------------
 
 % Part d
 
+% Part e
 
+%% 2.2
 
-%% Testing
-M = 22; %-- Filter Order is even
-n = 0:M; %-- "n index" vector
-nsh = n - M/2; %-- put main lobe in center of h[n]
-wb = 0.32*pi; %-- "Bandwidth" parameter of sinc
-bb = sin(wb*nsh)./(pi*nsh); %-- Filter Coefficients
-bb(find(nsh==0)) = wb/pi; %-- fix the divide by zero
-ww = -pi:(pi/500):pi; %-- omega hat frequency vector
-H = freqz(bb, 1, ww); %<--freekz(bb,1,ww) is an alternative
-subplot(2,1,1);
-plot(ww, abs(H)), grid on
-subplot(2,1,2);
-plot(ww, angle(H)), grid on
-xlabel('Normalized Radian Frequency')
+% Part a
+
+% Part b
+
+% Part c
+
+% Part d
+
+%% 2.3
+
+% Part a
+
+% Part b
+
+% Part c

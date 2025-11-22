@@ -5,7 +5,6 @@ addpath(genpath('filterdesign'));
 
 % ** The DSP System Toolbox was installed for the filterdesign GUI.
 
-% Part a
 
 % filterdesign % Used this command to open the GUI
 % M = 30;
@@ -64,11 +63,52 @@ coeffs = load("2_1_hamm_coeffs.mat");
 hamm_num_coeffs = coeffs.a;
 hamm_den_coeffs = coeffs.b;
 
+[h,w] = freqz(hamm_den_coeffs,hamm_num_coeffs,'whole',samples);
+f = w*F_samp/(2*pi); % Convert rad/s to Hz by multiplying by F_samp from GUI and dividing by 2π
+
+% Rotate h and shift f to show lowpass behavior.
+h = circshift(h,(samples/2));
+f = f-(F_samp/2);
+
+figure
+subplot(2,1,1)
+plot(f,abs(h))
+xlabel('Frequency (Hz)')
+ylabel('Magnitude')
+subplot(2,1,2)
+plot(f,angle(h))
+xlabel('Frequency (Hz)')
+ylabel('Phase')
+
+% Part a
+
 % Part b
 
 % Part c
 
-%h_n_hamming = h .*(0.54 - 0.46 * (cos(2*pi.*(0:M-1)./(M-1)))); % From table 10.1
+% --------------------------------------------------------------------------------
+% This isn't needed, it's being calculated in the GUI
+% h_n_hamming = h .*(0.54 - 0.46 * (cos(2*pi.*(0:M-1)./(M-1)))); % From table 10.1
+% --------------------------------------------------------------------------------
 
 % Part d
 
+% Part e
+
+%% 2.2
+
+% Part a
+
+% Part b
+
+% Part c
+
+% Part d
+
+%% 2.3
+
+% Part a
+
+% Part b
+
+% Part c
