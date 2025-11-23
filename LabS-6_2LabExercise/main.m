@@ -2,20 +2,20 @@
 clear; close all; clc;
 
 % Include DSP-First 'toolbox' to path if not already included
-if exist('filterdesign') == 0
+if exist('filterdesign.m') == 0
     addpath(genpath('filterdesign'));
 end
 
 % ** The DSP System Toolbox was installed for the filterdesign GUI.
 
-% Ask if running GUI is needed
+%% Ask if running GUI is needed
 valid = 0;
 while valid == 0
-    runGUI = input('Would you like to run the filterdesign GUI? (Y/N)','s');
-    if (runGUI == 'y' || runGUI =='Y')
+    runGUI = input('Would you like to run the filterdesign GUI? (Not required for grading) (Y/N)','s');
+    if (runGUI == "y" || runGUI =="Y")
         filterdesign; % Open the filter design GUI
         valid = 1;
-    elseif runGUI == 'n' || runGUI == 'N'
+    elseif runGUI == "n" || runGUI == "N"
         valid = 1;
     else
         disp('Invalid input, type ''Y'' or ''N''')
