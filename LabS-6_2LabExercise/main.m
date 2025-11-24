@@ -72,16 +72,14 @@ hamm_p_edge = 1503.8;
 % We can probably remove this then, yeah? ^^
 
 % Part d
-% 2496.2 Hz, |H| = 0.100168
-hamm_s_edge = 2496.2;
-
-% believe this part needs magnitude < .01, not .1^^
+% 2496.4 Hz, |H| = 0.009978
+hamm_s_edge = 2496.4;
 
 % Part e
 rect_cutoff = (rect_p_edge + rect_s_edge)/2;
 % Rectangular 1999.8 Hz
 hamm_cutoff = (hamm_p_edge + hamm_s_edge) / 2;
-% Hamming 2000 Hz ** THIS IS GOING TO CHANGE
+% Hamming 2000.1 Hz
 
 % The cutoff frequency is 2000 Hz. So yes, the curroff frequency is halfway
 % between the passband and stopband edges for both filters.
@@ -91,7 +89,7 @@ hamm_cutoff = (hamm_p_edge + hamm_s_edge) / 2;
 rect_t_width = rect_s_edge - rect_p_edge;
 % Rectangular 297.1 Hz
 hamm_t_width = hamm_s_edge - hamm_p_edge;
-% Hamming 992.4 Hz ** THIS IS GOING TO CHANGE
+% Hamming 992.6 Hz 
 
 % Part b
 % When comparing two Mth order filters, the one with a smaller transition width will have larger ripples.
@@ -110,7 +108,7 @@ hamm_t_width = hamm_s_edge - hamm_p_edge;
 % - Set "F_cutoff" to "2000"
 % - Export coefficients to a file (File → Export Coeffs → Export to File).
 
-plot_filter("2_2_hamm2_coeffs.mat",'Hamming Windowed Filter with Increased M',F_samp,samples);
+plot_filter("2_2_hamm2_coeffs.mat",'Hamming Windowed Filter with Increased M of 60',F_samp,samples);
 
 % Pb = 1751.9 Hz, 0.990007
 % Sb = 2248.1 Hz, 0.0100021
@@ -122,20 +120,58 @@ hamm2_t_width = hamm2_s_edge - hamm2_p_edge;
 % Part d
 % Tb = C / L
 % L = M + 1
-C1 = hamm_t_width * (30 + 1); % = 3.0764e+04
+C1 = hamm_t_width * (30 + 1); % = 3.0771e+04
 C2 = hamm2_t_width * (60 + 1); % = 3.0268e+04
-% if we remove the '+1' in the above, both evaluate to 2.9772e+04
 
-% Make sure to comment on transition width values when order doubles here,
-% need to wait to fix stop band from 2.1 hamming
+% If we remove the '+1' in the above, both evaluate to ~ 2.977e+04
+% When the order doubles, the transition width is halved (almost exactly). 
+% This confirms the equation of transition width = C / L, as the transition
+% width and order are inversely proportional.
 
 %% 2.3
 
 % Part a
 
+figure;
+I = imread('idealfiltersketch.png');
+imshow(I);
+
 % Part b
 
+hamm3_p_edge = 0.68 * pi / (2 * pi) * 10000; % 3400 Hz
+hamm3_s_edge = 0.72 * pi / (2 * pi) * 10000; % 3600 Hz
+hamm3_t_width = hamm3_s_edge - hamm3_p_edge; % 200 Hz
+
+C = (C1 + C2) / 2;
+L = C / hamm3_t_width; % ~ 153
+M = L - 1; % ~ 152
+
 % Part c
+
+hamm3_cutoff = (hamm3_p_edge + hamm3_s_edge) / 2; % 3500 Hz
+
+% Hamming windowing with order from window design formula
+% In the GUI:
+% - Select FIR
+% - Set "Design Method" to "Window" and "Lowpass"
+% - Set "Window Type" to "Hamming"
+% - Set "Order" to "152"
+% - Set "F_samp" to "10000"
+% - Set "F_cutoff" to "3500"
+% - Export coefficients to a file (File → Export Coeffs → Export to File).
+
+plot_filter("2_3_hamm3_coeffs.mat",'Hamming Windowed Filter with Calculated Order of 152',F_samp,samples)
+
+% 3401.8 Hz, |H| = 0.990034
+hamm3_p_edge = 3401.8;
+
+% 3598.2 Hz, |H| = 0.009972
+hamm3_s_edge = 3598.2;
+
+% The passband value of 0.68*pi converts to 3400 Hz, and the stopband value
+% of 0.72*pi converts to 3600 Hz. These values are very similar to the
+% values found from graphing the coefficients, so the frequency response
+% does meet the given specs. 
 
 
 %% Functions
