@@ -69,25 +69,32 @@ hamm_p_edge = 1503.8;
 % h_n_hamming = h .*(0.54 - 0.46 * (cos(2*pi.*(0:M-1)./(M-1)))); % From table 10.1
 % --------------------------------------------------------------------------------
 
+% We can probably remove this then, yeah? ^^
+
 % Part d
 % 2496.2 Hz, |H| = 0.100168
 hamm_s_edge = 2496.2;
 
+% believe this part needs magnitude < .01, not .1^^
+
 % Part e
 rect_cutoff = (rect_p_edge + rect_s_edge)/2;
-% Rectangular 1999.8
+% Rectangular 1999.8 Hz
 hamm_cutoff = (hamm_p_edge + hamm_s_edge) / 2;
-% Hamming 2000
+% Hamming 2000 Hz ** THIS IS GOING TO CHANGE
+
+% The cutoff frequency is 2000 Hz. So yes, the curroff frequency is halfway
+% between the passband and stopband edges for both filters.
 
 %% 2.2
 % Part a
 rect_t_width = rect_s_edge - rect_p_edge;
-% Rectangular 297.1
+% Rectangular 297.1 Hz
 hamm_t_width = hamm_s_edge - hamm_p_edge;
-% Hamming 992.4
+% Hamming 992.4 Hz ** THIS IS GOING TO CHANGE
 
 % Part b
-% When comparing two Mth order filters, the one with a smaller transition width will havelarger ripples.
+% When comparing two Mth order filters, the one with a smaller transition width will have larger ripples.
 
 % Part c
 % M = 60
@@ -110,7 +117,7 @@ plot_filter("2_2_hamm2_coeffs.mat",'Hamming Windowed Filter with Increased M',F_
 hamm2_p_edge = 1751.9;
 hamm2_s_edge = 2248.1;
 hamm2_t_width = hamm2_s_edge - hamm2_p_edge;
-% Tb = 496.2
+% Tb = 496.2 Hz
 
 % Part d
 % Tb = C / L
@@ -118,6 +125,9 @@ hamm2_t_width = hamm2_s_edge - hamm2_p_edge;
 C1 = hamm_t_width * (30 + 1); % = 3.0764e+04
 C2 = hamm2_t_width * (60 + 1); % = 3.0268e+04
 % if we remove the '+1' in the above, both evaluate to 2.9772e+04
+
+% Make sure to comment on transition width values when order doubles here,
+% need to wait to fix stop band from 2.1 hamming
 
 %% 2.3
 
