@@ -64,13 +64,6 @@ rect_s_edge = 2148.3;
 % 1503.8 Hz, |H| = 0.989997
 hamm_p_edge = 1503.8;
 
-% --------------------------------------------------------------------------------
-% This isn't needed, it's being calculated in the GUI
-% h_n_hamming = h .*(0.54 - 0.46 * (cos(2*pi.*(0:M-1)./(M-1)))); % From table 10.1
-% --------------------------------------------------------------------------------
-
-% We can probably remove this then, yeah? ^^
-
 % Part d
 % 2496.4 Hz, |H| = 0.009978
 hamm_s_edge = 2496.4;
@@ -81,7 +74,7 @@ rect_cutoff = (rect_p_edge + rect_s_edge)/2;
 hamm_cutoff = (hamm_p_edge + hamm_s_edge) / 2;
 % Hamming 2000.1 Hz
 
-% The cutoff frequency is 2000 Hz. So yes, the curroff frequency is halfway
+% The cutoff frequency is 2000 Hz. So yes, the cutoff frequency is halfway
 % between the passband and stopband edges for both filters.
 
 %% 2.2
@@ -123,7 +116,6 @@ hamm2_t_width = hamm2_s_edge - hamm2_p_edge;
 C1 = hamm_t_width * (30 + 1); % = 3.0771e+04
 C2 = hamm2_t_width * (60 + 1); % = 3.0268e+04
 
-% If we remove the '+1' in the above, both evaluate to ~ 2.977e+04
 % When the order doubles, the transition width is halved (almost exactly). 
 % This confirms the equation of transition width = C / L, as the transition
 % width and order are inversely proportional.
