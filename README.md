@@ -1,4 +1,12 @@
 # Analysis and Applications of the Discrete Time Fourier Transform
+###
+Group Members:
+- Adrian Sucahyo
+- Evan Lee
+- Yishar Mendoza
+- William Hurst
+
+ECE 5530/6530 - Fall 2025
 
 ## Introduction
 The Discrete Time Fourier Transform (DTFT) is a signal processing technique which is able to transform time domain signals into the frequency. This lab explores the applications of the DTFT in the context of FIR Filter Design and Dual-Tone Multi-Frequency Signaling.
