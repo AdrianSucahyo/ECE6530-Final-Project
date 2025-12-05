@@ -7,7 +7,7 @@ if exist('filterdesign.m') == 0
 end
 
 % ** The DSP System Toolbox was installed for the filterdesign GUI.
-
+    
 %% Ask if running GUI is needed
 valid = 0;
 while valid == 0
