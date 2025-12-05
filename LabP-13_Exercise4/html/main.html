@@ -1,0 +1,817 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>main</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-12-04">
+<meta name="DC.source" content="main.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">DTMF Problem Set</a>
+</li>
+<li>
+<a href="#2">3.1) DTMF Dial Function: dtmfdial.m</a>
+</li>
+<li>
+<a href="#3">4.1) A Scoring Function: dtmfscore.m</a>
+</li>
+<li>
+<a href="#4">4.2) A Scoring Function: dtmfscore.m</a>
+</li>
+<li>
+<a href="#5">4.3) DTMF Decode Function: dtmfrun.m</a>
+</li>
+<li>
+<a href="#6">4.4) Telephone Numbers</a>
+</li>
+<li>
+<a href="#7">4.5) Demo</a>
+</li>
+</ul>
+</div>
+<h2 id="1">DTMF Problem Set</h2>
+<pre class="codeinput">clear; clc;
+</pre>
+<h2 id="2">3.1) DTMF Dial Function: dtmfdial.m</h2>
+<pre class="codeinput">clear; clc;
+
+Fs = 8000;
+nums = [<span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]
+zeroMe = dtmfdial(nums, Fs);
+soundsc(zeroMe) <span class="comment">% Cool!</span>
+
+t = 0:1/Fs:0.25 * length(nums) - 1/Fs; <span class="comment">% Sampling values for sinusoids 0.20s long.</span>
+
+plot(t, zeroMe)
+
+spectrogram(zeroMe,200,50,1000,Fs,<span class="string">'yaxis'</span>)
+</pre>
+<pre class="codeoutput">
+nums =
+
+    '0123'
+
+</pre>
+<img vspace="5" hspace="5" src="main_01.png" alt=""> <h2 id="3">4.1) A Scoring Function: dtmfscore.m</h2>
+<p>PART A and B) Function is in dtmfdesign.m, we used the numerical method to scale the maximum magnitude of the frequency response of the filter to be 1.</p>
+<pre class="codeinput">
+<span class="comment">% PART C)</span>
+<span class="comment">% Function is used experimentally to determine appropriate L. See next parts for computation of optimal filter length</span>
+<span class="comment">% Here we generate the frequency filer bank</span>
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633]; <span class="comment">% Define Center Frequencies</span>
+
+<span class="comment">% PART D)</span>
+<span class="comment">% Generate the bandpass filters with L= 40 and fs = 8000. Plot the magnitude of the frequency responses all together on one plot to determine if the passbands are narrow enough to distinguish between each frequency.</span>
+<span class="comment">% Attempt: L = 40</span>
+clear; clc;
+
+<span class="comment">% Define Center Frequencies</span>
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 40;
+
+hh = dtmfdesign(Fb, L, Fs); <span class="comment">% Generate the frequency filter bank</span>
+[H1, ~] = freqz(hh(:,1)); [H2, ~] = freqz(hh(:,2));
+[H3, ~] = freqz(hh(:,3)); [H4, ~] = freqz(hh(:,4));
+[H5, ~] = freqz(hh(:,5)); [H6, ~] = freqz(hh(:,6));
+[H7, ~] = freqz(hh(:,7)); [H8, w] = freqz(hh(:,8));
+
+f = w * Fs / (2 * pi); <span class="comment">% Convert from angular frequency to plot in Hz</span>
+
+figure
+hold <span class="string">on</span>
+plot(f, abs(H1)); plot(f, abs(H2));
+plot(f, abs(H3)); plot(f, abs(H4));
+plot(f, abs(H5)); plot(f, abs(H6));
+plot(f, abs(H7)); plot(f, abs(H8));
+hold <span class="string">off</span>
+xlabel(<span class="string">'Frequency [Hz]'</span>)
+ylabel(<span class="string">'Magnitude [|H|]'</span>)
+<span class="comment">% They are not narrow enough to distinguish using the 0.707 threshold. Especially at lower frequencies values 697, 770, 852, 941 Hz since they are pretty close together.</span>
+
+<span class="comment">% PART E)</span>
+<span class="comment">% Generate the eight (scaled) bandpass filters with L= 80 and fs = 8000. Plot the magnitude of the frequency responses all together on one plot to determine if the passbands are narrow enough to distinguish between each frequency.</span>
+<span class="comment">% Attempt: L = 80</span>
+clear; clc;
+
+<span class="comment">% Define Center Frequencies</span>
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 80;
+
+hh = dtmfdesign(Fb, L, Fs); <span class="comment">% Generate the frequency filter bank</span>
+[H1, ~] = freqz(hh(:,1)); [H2, ~] = freqz(hh(:,2));
+[H3, ~] = freqz(hh(:,3)); [H4, ~] = freqz(hh(:,4));
+[H5, ~] = freqz(hh(:,5)); [H6, ~] = freqz(hh(:,6));
+[H7, ~] = freqz(hh(:,7)); [H8, w] = freqz(hh(:,8));
+
+f = w*Fs/(2*pi); <span class="comment">% Denormalize the angular frequency so we can plot in Hz</span>
+
+figure
+hold <span class="string">on</span>
+plot(f, abs(H1)); plot(f, abs(H2));
+plot(f, abs(H3)); plot(f, abs(H4));
+plot(f, abs(H5)); plot(f, abs(H6));
+plot(f, abs(H7)); plot(f, abs(H8));
+hold <span class="string">off</span>
+xlabel(<span class="string">'Frequency [Hz]'</span>)
+ylabel(<span class="string">'Magnitude [|H|]'</span>)
+
+<span class="comment">% By increasing the filter lengths, the passband is much narrower making it easier to distinguish between frequencies but still not enough for the 0.707 threshold.</span>
+
+ <span class="comment">% PART F)</span>
+<span class="comment">% Generate the eight (scaled) bandpass filters with L= ? and fs = 8000. Plot the magnitude of the frequency responses all together on one plot to determine if the passbands are narrow enough to distinguish between each frequency.</span>
+<span class="comment">% Attempt: L = 110</span>
+clear; clc;
+
+<span class="comment">% Define Center Frequencies</span>
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 110;
+
+hh = dtmfdesign(Fb, L, Fs); <span class="comment">% Generate the frequency filter bank</span>
+[H1, ~] = freqz(hh(:,1)); [H2, ~] = freqz(hh(:,2));
+[H3, ~] = freqz(hh(:,3)); [H4, ~] = freqz(hh(:,4));
+[H5, ~] = freqz(hh(:,5)); [H6, ~] = freqz(hh(:,6));
+[H7, ~] = freqz(hh(:,7)); [H8, w] = freqz(hh(:,8));
+
+f = w*Fs/(2*pi); <span class="comment">% Denormalize the angular frequency so we can plot in Hz</span>
+
+figure
+hold <span class="string">on</span>
+plot(f, abs(H1)); plot(f, abs(H2));
+plot(f, abs(H3)); plot(f, abs(H4));
+plot(f, abs(H5)); plot(f, abs(H6));
+plot(f, abs(H7)); plot(f, abs(H8));
+yline(1/sqrt(2))
+hold <span class="string">off</span>
+xlabel(<span class="string">'Frequency [Hz]'</span>)
+ylabel(<span class="string">'Magnitude [|H|]'</span>)
+
+yline(1/sqrt(2))
+
+xlim([471 1785])
+ylim([0.692 1.021])
+
+<span class="comment">% This is a good value as it allows frequencies to be distinguished between each other. This allows the 1/sqrt(2) threshold to hold.</span>
+
+<span class="comment">% idx = find(abs(H) &gt;= 1/sqrt(2));</span>
+<span class="comment">% w(idx) *Fs/(2*pi);</span>
+<span class="comment">% We chose L = 110 as the value which allows frequencies to be distinguishable. The frequency 'driving' the problem is the 697Hz frequency because of how close it it to the next value.</span>
+</pre>
+<img vspace="5" hspace="5" src="main_02.png" alt=""> <img vspace="5" hspace="5" src="main_03.png" alt=""> <img vspace="5" hspace="5" src="main_04.png" alt=""> <h2 id="4">4.2) A Scoring Function: dtmfscore.m</h2>
+<p>PART A, B, and C) Function is in dtmfscore.m. Function attempts to indentify the signals that are pressent in the transmission</p>
+<pre class="codeinput">
+<span class="comment">% PART D)</span>
+<span class="comment">% We needed to make sure that all BDF's had the same magnitude = 1 so that we can fairly compare which tones are present in the signal. Since we know the amplitude of the input sinusoids (amplitude of 1 each) and we know the gain of each filter (1), we can predict and control the output and clearly detect if a tone is present.</span>
+
+<span class="comment">% PART E)</span>
+<span class="comment">% Test the scoring function on a variety of tones to ensure functionality.</span>
+clear; clc;
+
+<span class="comment">% Define Center Frequencies</span>
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 110;
+
+hh = dtmfdesign(Fb, L, Fs); <span class="comment">% Generate the frequency filter bank</span>
+
+numbers = [<span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>];
+
+<span class="keyword">for</span> num = 1:10
+    nums = [numbers(num)];
+    single_tone = dtmfdial(nums, Fs);
+
+    <span class="comment">% Test the filter on the signal</span>
+    results = zeros(1, 8);
+    <span class="keyword">for</span> filter = 1:8
+        results(filter) = dtmfscore(single_tone, hh(:,filter));
+    <span class="keyword">end</span>
+
+    <span class="comment">% Print the resulting tones for each signal</span>
+    fprintf(<span class="string">'For %c Found Frequencies:\n'</span>, numbers(num))
+    result_frequencies = (Fb .* results);
+    disp(result_frequencies(results == 1))
+<span class="keyword">end</span>
+<span class="comment">% All tones and the found freuquencies are consistent for all dialed numbers, demonstrating that the scoring function works</span>
+</pre>
+<pre class="codeoutput">For 0 Found Frequencies:
+         941        1336
+
+For 1 Found Frequencies:
+         697        1209
+
+For 2 Found Frequencies:
+         697        1336
+
+For 3 Found Frequencies:
+         697        1477
+
+For 4 Found Frequencies:
+         770        1209
+
+For 5 Found Frequencies:
+         770        1336
+
+For 6 Found Frequencies:
+         770        1477
+
+For 7 Found Frequencies:
+         852        1209
+
+For 8 Found Frequencies:
+         852        1336
+
+For 9 Found Frequencies:
+         852        1477
+
+</pre>
+<h2 id="5">4.3) DTMF Decode Function: dtmfrun.m</h2>
+<p>Function is implemented in dtmfrun. Contains all the functionality to take an input signal and attempt to decode it into the series of numbers that were dialed. Perform a basic test with the function.</p>
+<pre class="codeinput">clear; clc;
+
+Fs = 8000;
+L = 110;
+numbers = [<span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>];
+
+<span class="comment">% Generate a Test Vector</span>
+test_tone = dtmfdial(numbers, Fs);
+
+<span class="comment">% Decode the Test Vector</span>
+test_result = dtmfrun(test_tone, L, Fs);
+
+<span class="comment">% Verify that the input and output are consistent</span>
+<span class="keyword">if</span> (numbers == test_result)
+    fprintf(<span class="string">'SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n'</span>, numbers, test_result);
+<span class="keyword">else</span>
+    fprintf(<span class="string">'FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n'</span>, numbers, test_result);
+<span class="keyword">end</span>
+<span class="comment">% Input and output are shown to be consistent and therefore demonstrate that the function works.</span>
+</pre>
+<pre class="codeoutput">SUCCESS: Test Vector Consistent!
+Input = 0123456789
+Output = 0123456789
+</pre>
+<h2 id="6">4.4) Telephone Numbers</h2>
+<p>Perform verifcation of the system using a variety of tests.</p>
+<pre class="codeinput">clear; clc;
+
+Fs = 8000;
+L = 110;
+
+<span class="comment">% Define possible inputs</span>
+key_options = [<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>,<span class="string">'D'</span>,<span class="string">'*'</span>,<span class="string">'#'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'3'</span>,<span class="string">'4'</span>,<span class="string">'5'</span>,<span class="string">'6'</span>,<span class="string">'7'</span>,<span class="string">'8'</span>,<span class="string">'9'</span>];
+
+<span class="comment">% Set to display graphs</span>
+display_graphs = 1
+
+<span class="comment">% Telephone Numbers</span>
+test_numbers = [<span class="string">'8015817200'</span>; <span class="string">'8015817281'</span>; <span class="string">'8015814000'</span>];
+
+<span class="keyword">for</span> i = 1:3
+    current_test = test_numbers(i,:)
+
+    <span class="comment">% Generate the Test Vector</span>
+    test_signal = dtmfdial(current_test, Fs);
+
+    <span class="comment">% Decode the Test Vector</span>
+    test_result = dtmfrun(test_signal, L, Fs);
+
+    <span class="keyword">if</span> (display_graphs)
+        t = 0:1/Fs:0.25 * length(current_test) - 1/Fs; <span class="comment">% Sampling values for sinusoids 0.20s long.</span>
+
+        figure;
+        plot(t, test_signal)
+        figure;
+        spectrogram(test_signal, 200, 50, 1000, Fs, <span class="string">'yaxis'</span>);
+    <span class="keyword">end</span>
+
+    <span class="comment">% Verify that the input and output are consistent</span>
+    <span class="keyword">if</span> (current_test == test_result)
+        fprintf(<span class="string">'SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n'</span>, current_test, test_result);
+    <span class="keyword">else</span>
+        fprintf(<span class="string">'FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n'</span>, current_test, test_result);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Random Input Test</span>
+num_tests = 4
+test_size = 16
+
+<span class="comment">% Generate Test Vectors</span>
+test_indicies = randi([1, 16], num_tests, test_size);
+test_vectors = key_options(test_indicies);
+
+<span class="keyword">for</span> i = 1:num_tests
+    current_test = test_vectors(i,:)
+
+    <span class="comment">% Generate the Test Vector</span>
+    test_signal = dtmfdial(current_test, Fs);
+
+    <span class="comment">% Decode the Test Vector</span>
+    test_result = dtmfrun(test_signal, L, Fs);
+
+    <span class="keyword">if</span> (display_graphs)
+        t = 0:1/Fs:0.25 * length(current_test) - 1/Fs; <span class="comment">% Sampling values for sinusoids 0.20s long.</span>
+
+        figure;
+        plot(t, test_signal)
+        figure;
+        spectrogram(test_signal, 200, 50, 1000, Fs, <span class="string">'yaxis'</span>);
+    <span class="keyword">end</span>
+
+    <span class="comment">% Verify that the input and output are consistent</span>
+    <span class="keyword">if</span> (current_test == test_result)
+        fprintf(<span class="string">'SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n'</span>, current_test, test_result);
+    <span class="keyword">else</span>
+        fprintf(<span class="string">'FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n'</span>, current_test, test_result);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Prescribed Test Number: 407*89132#BADC</span>
+current_test = <span class="string">'407*89132#BADC'</span>;
+
+<span class="comment">% Generate the Test Vector</span>
+test_signal = dtmfdial(current_test, Fs);
+
+<span class="comment">% soundsc(test_signal)</span>
+
+<span class="comment">% Decode the Test Vector</span>
+test_result = dtmfrun(test_signal, L, Fs);
+
+<span class="keyword">if</span> (display_graphs)
+    t = 0:1/Fs:0.25 * length(current_test) - 1/Fs; <span class="comment">% Sampling values for sinusoids 0.20s long.</span>
+
+    figure;
+    plot(t, test_signal)
+    figure;
+    spectrogram(test_signal, 200, 50, 1000, Fs, <span class="string">'yaxis'</span>);
+<span class="keyword">end</span>
+
+<span class="comment">% Verify that the input and output are consistent</span>
+<span class="keyword">if</span> (current_test == test_result)
+    fprintf(<span class="string">'SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n'</span>, current_test, test_result);
+<span class="keyword">else</span>
+    fprintf(<span class="string">'FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n'</span>, current_test, test_result);
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">
+display_graphs =
+
+     1
+
+
+current_test =
+
+    '8015817200'
+
+SUCCESS: Test Vector Consistent!
+Input = 8015817200
+Output = 8015817200
+
+current_test =
+
+    '8015817281'
+
+SUCCESS: Test Vector Consistent!
+Input = 8015817281
+Output = 8015817281
+
+current_test =
+
+    '8015814000'
+
+SUCCESS: Test Vector Consistent!
+Input = 8015814000
+Output = 8015814000
+
+num_tests =
+
+     4
+
+
+test_size =
+
+    16
+
+
+current_test =
+
+    '74990444*51C5496'
+
+SUCCESS: Test Vector Consistent!
+Input = 74990444*51C5496
+Output = 74990444*51C5496
+
+current_test =
+
+    '8B918A6CA#016C#*'
+
+SUCCESS: Test Vector Consistent!
+Input = 8B918A6CA#016C#*
+Output = 8B918A6CA#016C#*
+
+current_test =
+
+    'C*C66755B961*B32'
+
+SUCCESS: Test Vector Consistent!
+Input = C*C66755B961*B32
+Output = C*C66755B961*B32
+
+current_test =
+
+    '829C980A7A6441D5'
+
+SUCCESS: Test Vector Consistent!
+Input = 829C980A7A6441D5
+Output = 829C980A7A6441D5
+SUCCESS: Test Vector Consistent!
+Input = 407*89132#BADC
+Output = 407*89132#BADC
+</pre>
+<img vspace="5" hspace="5" src="main_05.png" alt=""> <img vspace="5" hspace="5" src="main_06.png" alt=""> <img vspace="5" hspace="5" src="main_07.png" alt=""> <img vspace="5" hspace="5" src="main_08.png" alt=""> <img vspace="5" hspace="5" src="main_09.png" alt=""> <img vspace="5" hspace="5" src="main_10.png" alt=""> <img vspace="5" hspace="5" src="main_11.png" alt=""> <img vspace="5" hspace="5" src="main_12.png" alt=""> <img vspace="5" hspace="5" src="main_13.png" alt=""> <img vspace="5" hspace="5" src="main_14.png" alt=""> <img vspace="5" hspace="5" src="main_15.png" alt=""> <img vspace="5" hspace="5" src="main_16.png" alt=""> <img vspace="5" hspace="5" src="main_17.png" alt=""> <img vspace="5" hspace="5" src="main_18.png" alt=""> <img vspace="5" hspace="5" src="main_19.png" alt=""> <img vspace="5" hspace="5" src="main_20.png" alt=""> <h2 id="7">4.5) Demo</h2>
+<p>Perform verifcation of the developed functions as needed. See section 4.4 for demonstrations.</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% DTMF Problem Set
+clear; clc;
+%% 3.1) DTMF Dial Function: dtmfdial.m
+clear; clc;
+
+Fs = 8000;
+nums = ['0', '1', '2', '3']
+zeroMe = dtmfdial(nums, Fs);
+soundsc(zeroMe) % Cool!
+
+t = 0:1/Fs:0.25 * length(nums) - 1/Fs; % Sampling values for sinusoids 0.20s long.
+
+plot(t, zeroMe)
+
+spectrogram(zeroMe,200,50,1000,Fs,'yaxis')
+
+%% 4.1) A Scoring Function: dtmfscore.m
+% PART A and B)
+% Function is in dtmfdesign.m, we used the numerical method to scale the maximum magnitude of the frequency response of the filter to be 1.
+
+% PART C)
+% Function is used experimentally to determine appropriate L. See next parts for computation of optimal filter length
+% Here we generate the frequency filer bank
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633]; % Define Center Frequencies
+
+% PART D)
+% Generate the bandpass filters with L= 40 and fs = 8000. Plot the magnitude of the frequency responses all together on one plot to determine if the passbands are narrow enough to distinguish between each frequency.
+% Attempt: L = 40
+clear; clc;
+
+% Define Center Frequencies
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 40;
+
+hh = dtmfdesign(Fb, L, Fs); % Generate the frequency filter bank
+[H1, ~] = freqz(hh(:,1)); [H2, ~] = freqz(hh(:,2));
+[H3, ~] = freqz(hh(:,3)); [H4, ~] = freqz(hh(:,4));
+[H5, ~] = freqz(hh(:,5)); [H6, ~] = freqz(hh(:,6));
+[H7, ~] = freqz(hh(:,7)); [H8, w] = freqz(hh(:,8));
+
+f = w * Fs / (2 * pi); % Convert from angular frequency to plot in Hz
+
+figure
+hold on
+plot(f, abs(H1)); plot(f, abs(H2));
+plot(f, abs(H3)); plot(f, abs(H4));
+plot(f, abs(H5)); plot(f, abs(H6));
+plot(f, abs(H7)); plot(f, abs(H8));
+hold off
+xlabel('Frequency [Hz]')
+ylabel('Magnitude [|H|]')
+% They are not narrow enough to distinguish using the 0.707 threshold. Especially at lower frequencies values 697, 770, 852, 941 Hz since they are pretty close together.
+
+% PART E)
+% Generate the eight (scaled) bandpass filters with L= 80 and fs = 8000. Plot the magnitude of the frequency responses all together on one plot to determine if the passbands are narrow enough to distinguish between each frequency.
+% Attempt: L = 80
+clear; clc;
+
+% Define Center Frequencies
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 80;
+
+hh = dtmfdesign(Fb, L, Fs); % Generate the frequency filter bank
+[H1, ~] = freqz(hh(:,1)); [H2, ~] = freqz(hh(:,2));
+[H3, ~] = freqz(hh(:,3)); [H4, ~] = freqz(hh(:,4));
+[H5, ~] = freqz(hh(:,5)); [H6, ~] = freqz(hh(:,6));
+[H7, ~] = freqz(hh(:,7)); [H8, w] = freqz(hh(:,8));
+
+f = w*Fs/(2*pi); % Denormalize the angular frequency so we can plot in Hz
+
+figure
+hold on
+plot(f, abs(H1)); plot(f, abs(H2));
+plot(f, abs(H3)); plot(f, abs(H4));
+plot(f, abs(H5)); plot(f, abs(H6));
+plot(f, abs(H7)); plot(f, abs(H8));
+hold off
+xlabel('Frequency [Hz]')
+ylabel('Magnitude [|H|]')
+
+% By increasing the filter lengths, the passband is much narrower making it easier to distinguish between frequencies but still not enough for the 0.707 threshold.
+
+ % PART F)
+% Generate the eight (scaled) bandpass filters with L= ? and fs = 8000. Plot the magnitude of the frequency responses all together on one plot to determine if the passbands are narrow enough to distinguish between each frequency.
+% Attempt: L = 110
+clear; clc;
+
+% Define Center Frequencies
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 110;
+
+hh = dtmfdesign(Fb, L, Fs); % Generate the frequency filter bank
+[H1, ~] = freqz(hh(:,1)); [H2, ~] = freqz(hh(:,2));
+[H3, ~] = freqz(hh(:,3)); [H4, ~] = freqz(hh(:,4));
+[H5, ~] = freqz(hh(:,5)); [H6, ~] = freqz(hh(:,6));
+[H7, ~] = freqz(hh(:,7)); [H8, w] = freqz(hh(:,8));
+
+f = w*Fs/(2*pi); % Denormalize the angular frequency so we can plot in Hz
+
+figure
+hold on
+plot(f, abs(H1)); plot(f, abs(H2));
+plot(f, abs(H3)); plot(f, abs(H4));
+plot(f, abs(H5)); plot(f, abs(H6));
+plot(f, abs(H7)); plot(f, abs(H8));
+yline(1/sqrt(2))
+hold off
+xlabel('Frequency [Hz]')
+ylabel('Magnitude [|H|]')
+
+yline(1/sqrt(2))
+
+xlim([471 1785])
+ylim([0.692 1.021])
+
+% This is a good value as it allows frequencies to be distinguished between each other. This allows the 1/sqrt(2) threshold to hold.
+
+% idx = find(abs(H) >= 1/sqrt(2));
+% w(idx) *Fs/(2*pi);
+% We chose L = 110 as the value which allows frequencies to be distinguishable. The frequency 'driving' the problem is the 697Hz frequency because of how close it it to the next value.
+
+%% 4.2) A Scoring Function: dtmfscore.m
+% PART A, B, and C)
+% Function is in dtmfscore.m. Function attempts to indentify the signals that are pressent in the transmission
+
+% PART D)
+% We needed to make sure that all BDF's had the same magnitude = 1 so that we can fairly compare which tones are present in the signal. Since we know the amplitude of the input sinusoids (amplitude of 1 each) and we know the gain of each filter (1), we can predict and control the output and clearly detect if a tone is present.
+
+% PART E)
+% Test the scoring function on a variety of tones to ensure functionality.
+clear; clc;
+
+% Define Center Frequencies
+Fb = [697, 770, 852, 941, 1209, 1336, 1477, 1633];
+
+Fs = 8000;
+L = 110;
+
+hh = dtmfdesign(Fb, L, Fs); % Generate the frequency filter bank
+
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+for num = 1:10
+    nums = [numbers(num)];
+    single_tone = dtmfdial(nums, Fs);
+    
+    % Test the filter on the signal
+    results = zeros(1, 8);
+    for filter = 1:8
+        results(filter) = dtmfscore(single_tone, hh(:,filter));
+    end
+
+    % Print the resulting tones for each signal
+    fprintf('For %c Found Frequencies:\n', numbers(num))
+    result_frequencies = (Fb .* results);
+    disp(result_frequencies(results == 1))
+end
+% All tones and the found freuquencies are consistent for all dialed numbers, demonstrating that the scoring function works
+
+%% 4.3) DTMF Decode Function: dtmfrun.m
+% Function is implemented in dtmfrun. Contains all the functionality to take an input signal and attempt to decode it into the series of numbers that were dialed.
+% Perform a basic test with the function.
+clear; clc;
+
+Fs = 8000;
+L = 110;
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+% Generate a Test Vector
+test_tone = dtmfdial(numbers, Fs);
+
+% Decode the Test Vector
+test_result = dtmfrun(test_tone, L, Fs);
+
+% Verify that the input and output are consistent
+if (numbers == test_result)
+    fprintf('SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n', numbers, test_result);
+else
+    fprintf('FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n', numbers, test_result);
+end
+% Input and output are shown to be consistent and therefore demonstrate that the function works.
+
+%% 4.4) Telephone Numbers
+% Perform verifcation of the system using a variety of tests.
+clear; clc;
+
+Fs = 8000;
+L = 110;
+
+% Define possible inputs
+key_options = ['A','B','C','D','*','#','0','1','2','3','4','5','6','7','8','9'];
+
+% Set to display graphs
+display_graphs = 1
+
+% Telephone Numbers
+test_numbers = ['8015817200'; '8015817281'; '8015814000'];
+
+for i = 1:3
+    current_test = test_numbers(i,:)
+
+    % Generate the Test Vector
+    test_signal = dtmfdial(current_test, Fs);
+    
+    % Decode the Test Vector
+    test_result = dtmfrun(test_signal, L, Fs);
+
+    if (display_graphs)
+        t = 0:1/Fs:0.25 * length(current_test) - 1/Fs; % Sampling values for sinusoids 0.20s long.
+        
+        figure;
+        plot(t, test_signal)
+        figure;
+        spectrogram(test_signal, 200, 50, 1000, Fs, 'yaxis');
+    end
+
+    % Verify that the input and output are consistent
+    if (current_test == test_result)
+        fprintf('SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n', current_test, test_result);
+    else
+        fprintf('FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n', current_test, test_result);
+    end
+end
+
+% Random Input Test
+num_tests = 4
+test_size = 16
+
+% Generate Test Vectors
+test_indicies = randi([1, 16], num_tests, test_size);
+test_vectors = key_options(test_indicies);
+
+for i = 1:num_tests
+    current_test = test_vectors(i,:)
+
+    % Generate the Test Vector
+    test_signal = dtmfdial(current_test, Fs);
+    
+    % Decode the Test Vector
+    test_result = dtmfrun(test_signal, L, Fs);
+
+    if (display_graphs)
+        t = 0:1/Fs:0.25 * length(current_test) - 1/Fs; % Sampling values for sinusoids 0.20s long.
+        
+        figure;
+        plot(t, test_signal)
+        figure;
+        spectrogram(test_signal, 200, 50, 1000, Fs, 'yaxis');
+    end
+
+    % Verify that the input and output are consistent
+    if (current_test == test_result)
+        fprintf('SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n', current_test, test_result);
+    else
+        fprintf('FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n', current_test, test_result);
+    end
+end
+
+% Prescribed Test Number: 407*89132#BADC
+current_test = '407*89132#BADC';
+
+% Generate the Test Vector
+test_signal = dtmfdial(current_test, Fs);
+
+% soundsc(test_signal)
+
+% Decode the Test Vector
+test_result = dtmfrun(test_signal, L, Fs);
+
+if (display_graphs)
+    t = 0:1/Fs:0.25 * length(current_test) - 1/Fs; % Sampling values for sinusoids 0.20s long.
+    
+    figure;
+    plot(t, test_signal)
+    figure;
+    spectrogram(test_signal, 200, 50, 1000, Fs, 'yaxis');
+end
+
+% Verify that the input and output are consistent
+if (current_test == test_result)
+    fprintf('SUCCESS: Test Vector Consistent!\nInput = %s\nOutput = %s\n', current_test, test_result);
+else
+    fprintf('FAILED: Test Vector Inconsistent!\nInput = %s\nOutput = %s\n', current_test, test_result);
+end
+
+%% 4.5) Demo
+% Perform verifcation of the developed functions as needed. See section 4.4 for demonstrations.
+
+##### SOURCE END #####
+-->
+</body>
+</html>
