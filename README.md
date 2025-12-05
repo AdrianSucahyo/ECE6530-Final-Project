@@ -13,7 +13,9 @@ The Discrete Time Fourier Transform (DTFT) is a signal processing technique whic
 
 ## FIR Filter Design
 
--- WRITE INSTRUCTIONS HERE --
+Finite Impulse Response (FIR) Filter Design involves designing practical filters with responses that approximate the responses of ideal filters. FIR filters are used to pass or reject frequencies post-sampling. The GUI provides a simple visual representation of the frequency response of these filters when changing parameters.
+
+When running the program, the user will be asked to type "Y" or "N" in the command window to choose whether to run the GUI or not.
 
 ## DTMF
 
